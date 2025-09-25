@@ -1,0 +1,12 @@
+{
+    "api_key": "your_api_key_here",
+    "secret_key": "your_secret_key_here",
+    "base_url": "https://fapi.asterdex.com",
+    "testnet": false,
+    "settings": {
+        "default_symbol": "BTCUSDT",
+        "default_interval": "1m",
+        "request_timeout": 30,
+        "max_retries": 3
+    }
+}
