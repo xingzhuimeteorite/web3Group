@@ -51,15 +51,16 @@ class AsterFinanceClient:
             hashlib.sha256
         ).hexdigest()
     
-    def _request(self, method: str, endpoint: str, params: Dict[str, Any] = None, signed: bool = False) -> Dict[str, Any]:
+    def _request(self, method: str, endpoint: str, params: Dict[str, Any] = None, signed: bool = False, retry_count: int = 3) -> Dict[str, Any]:
         """
-        发送HTTP请求
+        发送HTTP请求（带重试机制）
         
         Args:
             method: HTTP方法
             endpoint: API端点
             params: 请求参数
             signed: 是否需要签名
+            retry_count: 重试次数
             
         Returns:
             响应数据
@@ -74,59 +75,79 @@ class AsterFinanceClient:
             params['timestamp'] = int(time.time() * 1000)
             params['signature'] = self._generate_signature(params)
         
-        try:
-            if method.upper() == 'GET':
-                if params:
-                    query_string = urllib.parse.urlencode(params)
-                    url = f"{url}?{query_string}"
-                
-                req = urllib.request.Request(url, headers=self.headers)
-                
-            elif method.upper() == 'POST':
-                data = urllib.parse.urlencode(params).encode('utf-8')
-                req = urllib.request.Request(url, data=data, headers=self.headers)
-                
-            elif method.upper() == 'DELETE':
-                if params:
-                    query_string = urllib.parse.urlencode(params)
-                    url = f"{url}?{query_string}"
-                
-                req = urllib.request.Request(url, headers=self.headers)
-                req.get_method = lambda: 'DELETE'
-                
-            else:
-                raise ValueError(f"不支持的HTTP方法: {method}")
-            
-            # 创建SSL上下文，忽略证书验证（仅用于测试）
-            ssl_context = ssl.create_default_context()
-            ssl_context.check_hostname = False
-            ssl_context.verify_mode = ssl.CERT_NONE
-            
-            with urllib.request.urlopen(req, timeout=30, context=ssl_context) as response:
-                response_data = response.read().decode('utf-8')
-                return json.loads(response_data)
-                
-        except urllib.error.HTTPError as e:
-            error_msg = e.read().decode('utf-8')
-            print(f"HTTP错误 {e.code}: {error_msg}")
+        last_exception = None
+        
+        for attempt in range(retry_count):
             try:
-                error_data = json.loads(error_msg)
-                print(f"错误详情: {error_data}")
-            except:
-                pass
-            raise Exception(f"HTTP {e.code}: {error_msg}")
-            
-        except urllib.error.URLError as e:
-            print(f"网络错误: {e}")
-            raise
-            
-        except json.JSONDecodeError as e:
-            print(f"JSON解析错误: {e}")
-            raise
-            
-        except Exception as e:
-            print(f"请求错误: {e}")
-            raise
+                if method.upper() == 'GET':
+                    if params:
+                        query_string = urllib.parse.urlencode(params)
+                        url = f"{url}?{query_string}"
+                    
+                    req = urllib.request.Request(url, headers=self.headers)
+                    
+                elif method.upper() == 'POST':
+                    data = urllib.parse.urlencode(params).encode('utf-8')
+                    req = urllib.request.Request(url, data=data, headers=self.headers)
+                    
+                elif method.upper() == 'DELETE':
+                    if params:
+                        query_string = urllib.parse.urlencode(params)
+                        url = f"{url}?{query_string}"
+                    
+                    req = urllib.request.Request(url, headers=self.headers)
+                    req.get_method = lambda: 'DELETE'
+                    
+                else:
+                    raise ValueError(f"不支持的HTTP方法: {method}")
+                
+                # 创建SSL上下文，增强SSL配置
+                ssl_context = ssl.create_default_context()
+                ssl_context.check_hostname = False
+                ssl_context.verify_mode = ssl.CERT_NONE
+                # 设置更长的SSL握手超时
+                ssl_context.set_ciphers('DEFAULT@SECLEVEL=1')
+                
+                # 增加超时时间并添加重试逻辑
+                timeout = 60 if attempt == 0 else 90  # 首次60秒，重试时90秒
+                
+                with urllib.request.urlopen(req, timeout=timeout, context=ssl_context) as response:
+                    response_data = response.read().decode('utf-8')
+                    return json.loads(response_data)
+                    
+            except (urllib.error.URLError, OSError) as e:
+                last_exception = e
+                if attempt < retry_count - 1:
+                    wait_time = (attempt + 1) * 2  # 递增等待时间：2秒、4秒、6秒
+                    print(f"网络连接失败 (尝试 {attempt + 1}/{retry_count}): {e}")
+                    print(f"等待 {wait_time} 秒后重试...")
+                    time.sleep(wait_time)
+                    continue
+                else:
+                    print(f"网络错误，已重试 {retry_count} 次: {e}")
+                    raise
+                    
+            except urllib.error.HTTPError as e:
+                error_msg = e.read().decode('utf-8')
+                print(f"HTTP错误 {e.code}: {error_msg}")
+                try:
+                    error_data = json.loads(error_msg)
+                    print(f"错误详情: {error_data}")
+                except:
+                    pass
+                raise Exception(f"HTTP {e.code}: {error_msg}")
+                
+            except json.JSONDecodeError as e:
+                print(f"JSON解析错误: {e}")
+                raise
+                
+            except Exception as e:
+                print(f"请求错误: {e}")
+                raise
+        
+        # 如果所有重试都失败了
+        if last_exception:
+            raise last_exception
     
     # 公开接口 - 不需要API密钥
     def ping(self) -> Dict[str, Any]:
@@ -233,3 +254,112 @@ class AsterFinanceClient:
             
         params.update(kwargs)
         return self._request('POST', '/fapi/v1/order', params, signed=True)
+    
+    def cancel_order(self, symbol: str, order_id: int = None, orig_client_order_id: str = None) -> Dict[str, Any]:
+        """
+        取消订单
+        
+        Args:
+            symbol: 交易对符号
+            order_id: 订单ID
+            orig_client_order_id: 客户端订单ID
+        """
+        params = {'symbol': symbol}
+        
+        if order_id is not None:
+            params['orderId'] = order_id
+        elif orig_client_order_id is not None:
+            params['origClientOrderId'] = orig_client_order_id
+        else:
+            raise ValueError("必须提供 order_id 或 orig_client_order_id")
+            
+        return self._request('DELETE', '/fapi/v1/order', params, signed=True)
+    
+    def get_order(self, symbol: str, order_id: int = None, orig_client_order_id: str = None) -> Dict[str, Any]:
+        """
+        查询订单
+        
+        Args:
+            symbol: 交易对符号
+            order_id: 订单ID
+            orig_client_order_id: 客户端订单ID
+        """
+        params = {'symbol': symbol}
+        
+        if order_id is not None:
+            params['orderId'] = order_id
+        elif orig_client_order_id is not None:
+            params['origClientOrderId'] = orig_client_order_id
+        else:
+            raise ValueError("必须提供 order_id 或 orig_client_order_id")
+            
+        return self._request('GET', '/fapi/v1/order', params, signed=True)
+    
+    def get_open_orders(self, symbol: str = None) -> Dict[str, Any]:
+        """
+        查询当前挂单
+        
+        Args:
+            symbol: 交易对符号，如果为空则返回所有交易对的挂单
+        """
+        params = {}
+        if symbol:
+            params['symbol'] = symbol
+            
+        return self._request('GET', '/fapi/v1/openOrders', params, signed=True)
+    
+    def cancel_all_open_orders(self, symbol: str) -> Dict[str, Any]:
+        """
+        撤销所有挂单
+        
+        Args:
+            symbol: 交易对符号
+        """
+        params = {'symbol': symbol}
+        return self._request('DELETE', '/fapi/v1/allOpenOrders', params, signed=True)
+    
+    def get_all_orders(self, symbol: str, order_id: int = None, start_time: int = None, 
+                      end_time: int = None, limit: int = 500) -> Dict[str, Any]:
+        """
+        查询所有订单
+        
+        Args:
+            symbol: 交易对符号
+            order_id: 订单ID
+            start_time: 开始时间
+            end_time: 结束时间
+            limit: 返回数量限制
+        """
+        params = {'symbol': symbol, 'limit': limit}
+        
+        if order_id is not None:
+            params['orderId'] = order_id
+        if start_time is not None:
+            params['startTime'] = start_time
+        if end_time is not None:
+            params['endTime'] = end_time
+            
+        return self._request('GET', '/fapi/v1/allOrders', params, signed=True)
+    
+    def get_account_trades(self, symbol: str, start_time: int = None, end_time: int = None, 
+                          from_id: int = None, limit: int = 500) -> Dict[str, Any]:
+        """
+        查询账户成交历史
+        
+        Args:
+            symbol: 交易对符号
+            start_time: 开始时间
+            end_time: 结束时间
+            from_id: 起始成交ID
+            limit: 返回数量限制
+        """
+        params = {'symbol': symbol, 'limit': limit}
+        
+        if start_time is not None:
+            params['startTime'] = start_time
+        if end_time is not None:
+            params['endTime'] = end_time
+        if from_id is not None:
+            params['fromId'] = from_id
+            
+        return self._request('GET', '/fapi/v1/userTrades', params, signed=True)
