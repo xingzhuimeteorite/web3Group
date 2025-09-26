@@ -1,0 +1,27 @@
+{
+    "api_key": "your_bpx_api_key_here",
+    "secret_key": "your_bpx_secret_key_here",
+    "base_url": "https://api.backpack.exchange",
+    "testnet": false,
+    "trading_settings": {
+        "target_symbol": "ETH_USDC",
+        "base_coin_symbol": "ETH",
+        "grid_price_interval": 40,
+        "grid_usdc_per_order": 50,
+        "num_grids": 3,
+        "out_want": 0.004,
+        "trade_pct": 100,
+        "delay_between_operations": 3,
+        "delay_between_grids": 1
+    },
+    "risk_management": {
+        "max_loss_percentage": 5.0,
+        "stop_loss_enabled": true,
+        "max_position_size": 1000,
+        "daily_loss_limit": 200
+    },
+    "logging": {
+        "log_file_path": "trade_summary_log.txt",
+        "log_level": "INFO"
+    }
+}
