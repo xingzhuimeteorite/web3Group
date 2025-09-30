@@ -56,6 +56,7 @@ if current_profit >= min_profit_needed:
 - 持仓 < 1小时: 需要更高盈利才止盈
 - 持仓 ≥ 1小时: 达到最小盈利即可止盈
 - 积分价值计入总收益考量
+- **到期时间提醒**: 实时显示最小持仓时间的到期时刻，帮助判断最佳平仓时机
 
 ---
 
@@ -101,19 +102,19 @@ vim aster/config.json
 cd aster
 
 # 运行双向交易策略
-python sol_long_strategy.py
+python trade.py
 ```
 
 #### 2. 参数配置
 
 ##### 开仓次数设置
-编辑 `sol_long_strategy.py` 第704行：
+编辑 `trade.py` 第704行：
 ```python
 max_loops = 100  # 修改为你想要的开仓次数
 ```
 
 ##### 交易方向设置  
-编辑 `sol_long_strategy.py` 第712行：
+编辑 `trade.py` 第712行：
 ```python
 strategy_direction = "auto"  # 自动检测方向
 # strategy_direction = "long"   # 只做多
@@ -140,6 +141,7 @@ self.min_holding_time = 3600     # 最小持仓时间(秒)
 - 持仓状态和盈亏
 - 手续费计算
 - 积分获取情况
+- **到期平仓时间**: 显示最小持仓时间的到期时刻
 
 #### 2. 安全退出
 - 按 `Ctrl+C` 安全中断策略
@@ -197,7 +199,7 @@ cat sol_strategy.log | grep "盈亏"
 
 ```
 aster/
-├── sol_long_strategy.py         # 主策略文件
+├── trade.py                     # 主策略文件
 ├── aster_api_client.py          # API客户端
 ├── config_loader.py             # 配置加载器
 ├── config.json                  # API配置文件
@@ -210,4 +212,4 @@ aster/
 
 - [Aster Finance 官网](https://asterdex.com)
 - [API文档](https://github.com/asterdex/api-docs)
-- [策略源码](./aster/sol_long_strategy.py)
+- [策略源码](./aster/trade.py)

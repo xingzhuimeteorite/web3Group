@@ -8,6 +8,11 @@
 - **Aster Finance**: SOL双向交易策略，专注积分获取和手续费优化
 - **Backpack Exchange**: 网格交易策略，捕捉市场波动获利
 
+### 🆕 最新功能更新
+- **到期时间显示**: 新增持仓到期时间实时显示功能，帮助用户更好地把握交易时机
+- **策略文件统一**: 将主策略文件统一命名为 `trade.py`，提升项目一致性
+- **参数优化**: 优化了止盈止损参数和最小持仓时间，提高策略效率
+
 ## 📚 策略文档
 
 ### Aster Finance SOL双向交易策略
@@ -37,7 +42,7 @@ web3Group/
 │   ├── __init__.py
 │   ├── aster_api_client.py    # API客户端
 │   ├── config_loader.py       # 配置加载器
-│   ├── sol_long_strategy.py   # SOL双向交易策略
+│   ├── trade.py               # SOL双向交易策略
 │   ├── points_monitor.py      # 积分监控系统
 │   ├── test_account.py        # 账户测试
 │   └── config.json.template   # 配置模板
@@ -59,6 +64,7 @@ web3Group/
 
 ### 监控系统
 - **实时监控**: 价格、持仓、盈亏实时跟踪
+- **到期时间提醒**: 显示最小持仓时间的到期时刻，优化交易时机
 - **数据分析**: 交易数据统计和分析
 - **积分追踪**: 自动追踪平台积分获取情况
 

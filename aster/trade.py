@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from typing import Dict, Optional, Tuple
 from aster_api_client import AsterFinanceClient
 from config_loader import ConfigLoader
+from retry_handler import smart_retry, network_retry, api_retry, critical_retry, reset_circuit_breaker, get_circuit_breaker_status
 
 # 配置日志
 logging.basicConfig(
@@ -46,9 +47,9 @@ class SOLBidirectionalStrategy:
         self.position_size = 50.0  # 每次开仓金额 (USDT)
         self.leverage = 5  # 杠杆倍数
         self.fee_rate = 0.0005  # 手续费率 0.05%
-        self.profit_threshold = 0.015  # 止盈阈值 1.5%
-        self.stop_loss_threshold = 0.01  # 止损阈值 1%
-        self.min_holding_time = 3600  # 最小持仓时间 1小时 (获得5倍积分)
+        self.profit_threshold = 0.008  # 止盈阈值 0.8%
+        self.stop_loss_threshold = 0.006  # 止损阈值 0.6%
+        self.min_holding_time = 1800  # 最小持仓时间 30分钟 (获得5倍积分)
         
         # 交易方向控制
         self.direction = direction.lower()  # 'long', 'short', 'auto'
@@ -68,6 +69,7 @@ class SOLBidirectionalStrategy:
         logger.info(f"📊 策略参数: 仓位={self.position_size}USDT, 杠杆={self.leverage}x, 手续费={self.fee_rate*100}%")
         logger.info(f"🎯 止盈={self.profit_threshold*100}%, 止损={self.stop_loss_threshold*100}%")
     
+    @network_retry
     def get_current_price(self) -> float:
         """获取SOL当前价格"""
         try:
@@ -75,7 +77,7 @@ class SOLBidirectionalStrategy:
             return float(ticker['price'])
         except Exception as e:
             logger.error(f"❌ 获取价格失败: {e}")
-            return None
+            raise  # 让重试装饰器处理
     
     def calculate_fees(self, trade_amount: float) -> float:
         """计算交易手续费"""
@@ -143,6 +145,7 @@ class SOLBidirectionalStrategy:
             logger.error(f"❌ 方向检测失败: {e}，默认做多")
             return "BUY"
     
+    @api_retry
     def check_account_balance(self) -> float:
         """检查账户余额"""
         try:
@@ -152,7 +155,7 @@ class SOLBidirectionalStrategy:
             return available_balance
         except Exception as e:
             logger.error(f"❌ 获取账户信息失败: {e}")
-            return 0.0
+            raise  # 让重试装饰器处理
     
     def calculate_position_size(self, balance: float, price: float) -> float:
         """
@@ -200,6 +203,7 @@ class SOLBidirectionalStrategy:
         
         return quantity
     
+    @critical_retry
     def open_position(self, side: str = None) -> bool:
         """开仓 (支持多空双向)
         
@@ -282,8 +286,9 @@ class SOLBidirectionalStrategy:
                 
         except Exception as e:
             logger.error(f"❌ 开仓异常: {e}")
-            return False
-    
+            raise  # 让重试装饰器处理
+
+    @critical_retry
     def close_position(self, reason: str = "手动平仓") -> bool:
         """平仓"""
         try:
@@ -354,8 +359,9 @@ class SOLBidirectionalStrategy:
                 
         except Exception as e:
             logger.error(f"❌ 平仓异常: {e}")
-            return False
-    
+            raise  # 让重试装饰器处理
+
+    @api_retry
     def monitor_position(self) -> bool:
         """
         监控持仓状态并执行止盈止损
@@ -409,6 +415,15 @@ class SOLBidirectionalStrategy:
             holding_hours = 0  # 实际应用中需要记录开仓时间
             
             position_type = "多单" if is_long else "空单"
+            
+            # 计算到期平仓时间 - 修复变量名错误
+            min_holding_hours = self.min_holding_time / 3600  # 转换为小时
+            # 使用当前时间估算到期时间
+            from datetime import datetime, timedelta
+            estimated_entry_time = datetime.now() - timedelta(hours=holding_hours)
+            expiry_time = estimated_entry_time + timedelta(seconds=self.min_holding_time)
+            expiry_time_str = expiry_time.strftime("%H:%M:%S")
+            
             print(f"\n📊 持仓监控 ({position_type}):")
             print(f"   持仓数量: {abs(position_amt)} SOL")
             print(f"   入场价格: {entry_price:.4f} USDT")
@@ -417,6 +432,7 @@ class SOLBidirectionalStrategy:
             print(f"   止损价格: {stop_loss_price:.4f} USDT (-{self.stop_loss_threshold*100}%)")
             print(f"   当前盈亏: {unrealized_pnl:.4f} USDT ({pnl_percentage:+.2f}%)")
             print(f"   持仓时间: {holding_hours:.1f} 小时")
+            print(f"   到期时间: {expiry_time_str} (最小持仓{min_holding_hours:.1f}小时)")
             
             # 检查止盈条件 (多空双向)
             if is_long and current_price >= take_profit_price:
@@ -443,7 +459,7 @@ class SOLBidirectionalStrategy:
             
         except Exception as e:
             print(f"❌ 监控持仓失败: {e}")
-            return False
+            raise  # 让重试装饰器处理
     
     def close_position_by_amount(self, position_amt: float, reason: str) -> bool:
         """
@@ -552,7 +568,8 @@ class SOLBidirectionalStrategy:
             return f"止盈触发 (盈利{pnl_percentage*100:.2f}%, 净盈利{net_pnl:.4f}USDT)"
         
         # 最小持仓时间检查 + 盈利覆盖手续费
-        if holding_hours >= 1.0 and net_pnl > 0:
+        min_holding_hours = self.min_holding_time / 3600  # 转换为小时
+        if holding_hours >= min_holding_hours and net_pnl > 0:
             return f"达到最小持仓时间且盈利 (持仓{holding_hours:.2f}h, 净盈利{net_pnl:.4f}USDT)"
         
         return None
@@ -701,66 +718,107 @@ def main():
     print("=" * 50)
     
     # 循环参数
-    max_loops = 100  # 最大循环次数
+    max_loops = 1000  # 最大循环次数
     current_loop = 0
     total_pnl = 0.0
+    consecutive_failures = 0  # 连续失败计数
+    max_consecutive_failures = 3  # 最大连续失败次数
     
     # 策略方向设置 (可以修改这里来控制交易方向)
     # 选项: "long" (只做多), "short" (只做空), "auto" (自动检测)
-    strategy_direction = "short"  # 默认自动检测方向
+    strategy_direction = "auto"  # 默认自动检测方向
     
     try:
         while current_loop < max_loops:
             current_loop += 1
             print(f"\n🔄 开始第 {current_loop} 轮策略...")
             
-            # 创建策略实例 (使用新的双向策略类)
-            strategy = SOLBidirectionalStrategy(direction=strategy_direction)
+            # 检查熔断器状态
+            cb_status = get_circuit_breaker_status()
+            if cb_status['state'] == 'OPEN':
+                wait_time = cb_status.get('time_until_retry', 0)
+                print(f"🚨 熔断器开启中，等待 {wait_time:.0f} 秒后重试...")
+                if wait_time > 0:
+                    time.sleep(min(wait_time, 60))  # 最多等待60秒
+                    continue
             
-            # 检查账户状态
-            balance = strategy.check_account_balance()
-            if balance < strategy.position_size:
-                print(f"❌ 账户余额不足: {balance:.2f} USDT < {strategy.position_size} USDT")
-                print("🛑 循环终止")
-                break
-            
-            # 获取当前价格
-            current_price = strategy.get_current_price()
-            if not current_price:
-                print("❌ 无法获取SOL价格，跳过本轮")
-                continue
-            
-            print(f"💰 账户余额: {balance:.2f} USDT")
-            print(f"📈 SOL当前价格: {current_price:.4f} USDT")
-            print(f"🎯 第 {current_loop}/{max_loops} 轮策略 (方向: {strategy_direction})")
-            print("=" * 50)
-            
-            # 记录开始余额
-            start_balance = balance
-            
-            # 运行策略
-            strategy.run_strategy()
-            
-            # 计算本轮盈亏
-            end_balance = strategy.check_account_balance()
-            loop_pnl = end_balance - start_balance
-            total_pnl += loop_pnl
-            
-            print(f"\n📊 第 {current_loop} 轮完成:")
-            print(f"   本轮盈亏: {loop_pnl:+.4f} USDT")
-            print(f"   累计盈亏: {total_pnl:+.4f} USDT")
-            print(f"   当前余额: {end_balance:.2f} USDT")
-            
-            # 如果不是最后一轮，等待60秒
-            if current_loop < max_loops:
-                print("⏰ 等待60秒后开始下一轮...")
-                import time
-                time.sleep(60)
+            try:
+                # 创建策略实例 (使用新的双向策略类)
+                strategy = SOLBidirectionalStrategy(direction=strategy_direction)
+                
+                # 检查账户状态
+                balance = strategy.check_account_balance()
+                if balance < strategy.position_size:
+                    print(f"❌ 账户余额不足: {balance:.2f} USDT < {strategy.position_size} USDT")
+                    print("🛑 循环终止")
+                    break
+                
+                # 获取当前价格
+                current_price = strategy.get_current_price()
+                if not current_price:
+                    print("❌ 无法获取SOL价格，跳过本轮")
+                    consecutive_failures += 1
+                    if consecutive_failures >= max_consecutive_failures:
+                        print(f"🚨 连续失败 {consecutive_failures} 次，策略终止")
+                        break
+                    continue
+                
+                print(f"💰 账户余额: {balance:.2f} USDT")
+                print(f"📈 SOL当前价格: {current_price:.4f} USDT")
+                print(f"🎯 第 {current_loop}/{max_loops} 轮策略 (方向: {strategy_direction})")
+                print("=" * 50)
+                
+                # 记录开始余额
+                start_balance = balance
+                
+                # 运行策略
+                strategy.run_strategy()
+                
+                # 计算本轮盈亏
+                end_balance = strategy.check_account_balance()
+                loop_pnl = end_balance - start_balance
+                total_pnl += loop_pnl
+                
+                print(f"\n📊 第 {current_loop} 轮完成:")
+                print(f"   本轮盈亏: {loop_pnl:+.4f} USDT")
+                print(f"   累计盈亏: {total_pnl:+.4f} USDT")
+                print(f"   当前余额: {end_balance:.2f} USDT")
+                
+                # 重置连续失败计数
+                consecutive_failures = 0
+                
+                # 如果不是最后一轮，等待60秒
+                if current_loop < max_loops:
+                    print("⏰ 等待60秒后开始下一轮...")
+                    time.sleep(60)
+                    
+            except Exception as e:
+                consecutive_failures += 1
+                logger.error(f"❌ 第 {current_loop} 轮策略执行失败: {e}")
+                
+                # 检查是否需要重置熔断器
+                if consecutive_failures >= max_consecutive_failures:
+                    print(f"🚨 连续失败 {consecutive_failures} 次，尝试重置熔断器...")
+                    reset_circuit_breaker()
+                    consecutive_failures = 0  # 重置计数
+                    
+                    # 等待更长时间再重试
+                    print("⏰ 等待 300 秒后重试...")
+                    time.sleep(300)
+                else:
+                    # 短暂等待后继续
+                    wait_time = consecutive_failures * 30  # 递增等待时间
+                    print(f"⏰ 等待 {wait_time} 秒后重试...")
+                    time.sleep(wait_time)
         
         print(f"\n🏆 循环策略完成!")
         print(f"   总轮数: {current_loop}")
         print(f"   总盈亏: {total_pnl:+.4f} USDT")
         print(f"   策略方向: {strategy_direction}")
+        
+        # 显示最终熔断器状态
+        final_cb_status = get_circuit_breaker_status()
+        print(f"🔧 熔断器最终状态: {final_cb_status['state']}")
         
     except KeyboardInterrupt:
         print(f"\n⚠️ 用户中断，已完成 {current_loop} 轮")
@@ -768,6 +826,10 @@ def main():
     except Exception as e:
         logger.error(f"❌ 程序异常: {e}")
         print(f"❌ 程序运行失败: {e}")
+        
+        # 显示熔断器状态用于调试
+        cb_status = get_circuit_breaker_status()
+        print(f"🔧 熔断器状态: {cb_status}")
 
 if __name__ == "__main__":
     main()

@@ -51,6 +51,9 @@ total_fee = buy_fee + sell_fee     # 总手续费约 0.19%
 
 # 确保利润覆盖手续费
 min_profit_needed = total_fee + 0.001  # 额外缓冲
+
+# 最小持仓时间控制
+min_holding_time = 1080  # 18分钟，确保获得积分的同时控制风险
 ```
 
 #### 3. 积分获取机制 <mcreference link="https://support.backpack.exchange/exchange/programs/points" index="4">4</mcreference>
@@ -147,6 +150,7 @@ python trade.py
 - 账户余额变化
 - 累计手续费统计
 - 成功交易次数
+- **到期平仓时间**: 显示最小持仓时间的到期时刻
 
 #### 2. 日志记录
 ```bash
