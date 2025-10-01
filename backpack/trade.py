@@ -11,14 +11,29 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, Optional, Tuple
 import decimal
+import sys
+import os
+
+# 添加当前目录到Python路径，支持从不同位置运行
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
 
 from bpx.account import Account
 from bpx.public import Public
 from bpx.constants.enums import OrderTypeEnum, TimeInForceEnum
-from config_loader import ConfigLoader
-from enhanced_logger import EnhancedLogger
-from risk_manager import BackpackRiskManager
-from performance_monitor import PerformanceMonitor
+
+try:
+    # 尝试相对导入（从根目录运行时）
+    from .config_loader import ConfigLoader
+    from .enhanced_logger import EnhancedLogger
+    from .risk_manager import BackpackRiskManager
+    from .performance_monitor import PerformanceMonitor
+except ImportError:
+    # 如果相对导入失败，使用绝对导入（直接运行时）
+    from config_loader import ConfigLoader
+    from enhanced_logger import EnhancedLogger
+    from risk_manager import BackpackRiskManager
+    from performance_monitor import PerformanceMonitor
 
 # 配置日志
 logging.basicConfig(
@@ -38,7 +53,7 @@ class SOLStopLossStrategy:
         """初始化策略"""
         self.config = ConfigLoader(config_path)
         
-        # 初始化客户端
+        # 初始化Backpack客户端
         credentials = self.config.get_api_credentials()
         self.account_client = Account(
             public_key=credentials.get('api_key'),
@@ -96,14 +111,36 @@ class SOLStopLossStrategy:
         except:
             return 8  # 默认8位小数
     
-    async def get_current_price(self) -> Optional[decimal.Decimal]:
-        """获取SOL当前价格"""
+    async def get_current_price(self, symbol: str = None) -> Optional[decimal.Decimal]:
+        """获取当前价格"""
         try:
+            # 如果传入了symbol参数，使用传入的symbol，否则使用默认的self.symbol
+            target_symbol = symbol if symbol else self.symbol
+            
             tickers = self.public_client.get_tickers()
-            ticker = next((t for t in tickers if t.get('symbol') == self.symbol), None)
-            if ticker and 'lastPrice' in ticker:
-                return decimal.Decimal(str(ticker['lastPrice']))
+            
+            # 检查返回值是否为字符串（通常是错误页面）
+            if isinstance(tickers, str):
+                if "503 Service Temporarily Unavailable" in tickers:
+                    logger.error("❌ Backpack API服务暂时不可用 (503)")
+                    raise Exception("Backpack API服务暂时不可用 (503)")
+                elif "html" in tickers.lower():
+                    logger.error("❌ Backpack API返回HTML错误页面")
+                    raise Exception("API返回HTML错误页面")
+                else:
+                    logger.error(f"❌ Backpack API返回异常字符串: {tickers[:100]}")
+                    raise Exception(f"获取价格失败: {tickers[:100]}")
+            
+            # 正常处理列表格式的tickers
+            if isinstance(tickers, list):
+                ticker = next((t for t in tickers if t.get('symbol') == target_symbol), None)
+                if ticker and 'lastPrice' in ticker:
+                    price = decimal.Decimal(str(ticker['lastPrice']))
+                    logger.debug(f"📊 当前价格: {price}")
+                    return price
+            
             return None
+            
         except Exception as e:
             logger.error(f"❌ 获取价格失败: {e}")
             return None

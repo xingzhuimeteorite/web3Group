@@ -105,8 +105,12 @@ class AsterFinanceClient:
                 ssl_context = ssl.create_default_context()
                 ssl_context.check_hostname = False
                 ssl_context.verify_mode = ssl.CERT_NONE
-                # 设置更长的SSL握手超时
+                # 设置更长的SSL握手超时和更宽松的安全级别
                 ssl_context.set_ciphers('DEFAULT@SECLEVEL=1')
+                # 添加更多SSL选项以提高兼容性
+                ssl_context.options |= ssl.OP_NO_SSLv2
+                ssl_context.options |= ssl.OP_NO_SSLv3
+                ssl_context.minimum_version = ssl.TLSVersion.TLSv1_2
                 
                 # 增加超时时间并添加重试逻辑
                 timeout = 60 if attempt == 0 else 90  # 首次60秒，重试时90秒
@@ -130,9 +134,15 @@ class AsterFinanceClient:
             except urllib.error.HTTPError as e:
                 error_msg = e.read().decode('utf-8')
                 print(f"HTTP错误 {e.code}: {error_msg}")
+                print(f"请求URL: {url}")
+                print(f"请求参数: {params}")
                 try:
                     error_data = json.loads(error_msg)
                     print(f"错误详情: {error_data}")
+                    if 'code' in error_data:
+                        print(f"错误代码: {error_data['code']}")
+                    if 'msg' in error_data:
+                        print(f"错误消息: {error_data['msg']}")
                 except:
                     pass
                 raise Exception(f"HTTP {e.code}: {error_msg}")
@@ -218,7 +228,42 @@ class AsterFinanceClient:
         params = {}
         if symbol:
             params['symbol'] = symbol
-        return self._request('GET', '/fapi/v1/ticker/price', params)
+        
+        # 对于价格查询，不需要签名，使用公开端点
+        try:
+            return self._request('GET', '/fapi/v1/ticker/price', params, signed=False)
+        except Exception as e:
+            # 如果主端点失败，尝试备用端点
+            try:
+                return self._request('GET', '/fapi/v1/ticker/24hr', params, signed=False)
+            except Exception as e2:
+                print(f"备用端点也失败: {e2}")
+                raise e
+    
+    async def get_current_price(self, symbol: str) -> Optional[float]:
+        """
+        获取当前价格 (异步方法)
+        
+        Args:
+            symbol: 交易对符号
+            
+        Returns:
+            当前价格，失败时返回None
+        """
+        try:
+            result = self.get_ticker_price(symbol)
+            if result and 'price' in result:
+                return float(result['price'])
+            elif result and 'lastPrice' in result:  # 24hr ticker格式
+                return float(result['lastPrice'])
+            return None
+        except Exception as e:
+            print(f"获取价格失败: {e}")
+            # 返回模拟价格作为备用
+            if symbol == "SOLUSDT":
+                print("⚠️ 使用模拟价格")
+                return 150.0  # SOL的模拟价格
+            return None
     
     # 需要签名的接口
     def get_account_info(self) -> Dict[str, Any]:

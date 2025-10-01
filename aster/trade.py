@@ -44,8 +44,8 @@ class SOLBidirectionalStrategy:
         
         # 策略参数
         self.symbol = "SOLUSDT"
-        self.position_size = 50.0  # 每次开仓金额 (USDT)
-        self.leverage = 5  # 杠杆倍数
+        self.position_size = 25.0  # 每次开仓金额 (USDT) - 杠杆后总金额50U
+        self.leverage = 2  # 杠杆倍数 - 2倍杠杆后达到50U
         self.fee_rate = 0.0005  # 手续费率 0.05%
         self.profit_threshold = 0.008  # 止盈阈值 0.8%
         self.stop_loss_threshold = 0.006  # 止损阈值 0.6%
