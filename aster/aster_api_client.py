@@ -273,6 +273,14 @@ class AsterFinanceClient:
     def get_position_risk(self) -> Dict[str, Any]:
         """获取用户持仓风险"""
         return self._request('GET', '/fapi/v2/positionRisk', signed=True)
+
+    def change_initial_leverage(self, symbol: str, leverage: int) -> Dict[str, Any]:
+        """设置交易对的初始杠杆"""
+        params = {
+            'symbol': symbol,
+            'leverage': leverage
+        }
+        return self._request('POST', '/fapi/v1/leverage', params, signed=True)
     
     def place_order(self, symbol: str, side: str, order_type: str, quantity: float, 
                    price: float = None, **kwargs) -> Dict[str, Any]:

@@ -44,7 +44,7 @@ class SOLBidirectionalStrategy:
         
         # 策略参数
         self.symbol = "SOLUSDT"
-        self.position_size = 25.0  # 每次开仓金额 (USDT) - 杠杆后总金额50U
+        self.position_size = 50.0  # 每次开仓金额 (USDT) - 杠杆后总金额需要*2
         self.leverage = 2  # 杠杆倍数 - 2倍杠杆后达到50U
         self.fee_rate = 0.0005  # 手续费率 0.05%
         self.profit_threshold = 0.008  # 止盈阈值 0.8%
@@ -175,11 +175,12 @@ class SOLBidirectionalStrategy:
         min_quantity = 0.01  # 最小数量
         step_size = 0.01    # 数量步长
         
-        # 使用固定金额50 USDT开仓，但确保满足最小名义价值
-        target_value = min(50.0, balance * 0.8)  # 最多使用80%余额
+        # 使用用户配置的开仓金额，但确保满足最小名义价值
+        target_value = min(self.position_size, balance * 0.8)  # 最多使用80%余额
         target_value = max(target_value, min_notional)  # 确保不小于最小名义价值
         
-        quantity = target_value / price / self.leverage
+        # 目标名义价值=配置的仓位大小×杠杆；据此计算数量
+        quantity = (target_value * self.leverage) / price
         
         # 计算满足最小名义价值的数量
         required_quantity = min_notional / price
@@ -222,6 +223,13 @@ class SOLBidirectionalStrategy:
                 else:
                     logger.error(f"❌ 无效的策略方向: {self.direction}")
                     return False
+
+            # 在下单前确保交易对杠杆设置为策略要求
+            try:
+                resp = self.client.change_initial_leverage(self.symbol, self.leverage)
+                logger.info(f"🔧 已设置杠杆: {self.symbol} -> {self.leverage}x")
+            except Exception as e:
+                logger.warning(f"⚠️ 设置杠杆失败，继续使用交易所当前杠杆: {e}")
             
             # 检查余额
             balance = self.check_account_balance()
@@ -726,7 +734,7 @@ def main():
     
     # 策略方向设置 (可以修改这里来控制交易方向)
     # 选项: "long" (只做多), "short" (只做空), "auto" (自动检测)
-    strategy_direction = "auto"  # 默认自动检测方向
+    strategy_direction = "long"  # 默认自动检测方向
     
     try:
         while current_loop < max_loops:
