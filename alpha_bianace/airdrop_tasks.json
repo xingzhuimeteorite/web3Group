@@ -1,0 +1,164 @@
+{
+  "PIEVERSE_2025-10-29_16:00": {
+    "airdrop_info": {
+      "name": "pieverse",
+      "token": "PIEVERSE",
+      "points": "227",
+      "amount": "255",
+      "time": "16:00",
+      "date": "2025-10-29",
+      "status": "announced",
+      "type": "tge"
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:18:32.461624",
+    "updated_at": "2025-10-30T18:36:27.604770"
+  },
+  "BOS_2025-10-29_19:00": {
+    "airdrop_info": {
+      "name": "BitcoinOS",
+      "token": "BOS",
+      "points": "240",
+      "amount": "2688",
+      "time": "19:00",
+      "date": "2025-10-29",
+      "status": "announced",
+      "type": "grab"
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:18:32.461706",
+    "updated_at": "2025-10-30T18:36:27.604819"
+  },
+  "_2025-10-30_20:00": {
+    "airdrop_info": {
+      "name": "",
+      "token": "",
+      "points": "240",
+      "amount": "",
+      "time": "20:00",
+      "date": "2025-10-30",
+      "status": "announced",
+      "type": "grab"
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-10-30T18:18:32.461724",
+    "updated_at": "2025-10-30T18:36:27.604827"
+  },
+  "MMT_2025-10-31_17:00": {
+    "airdrop_info": {
+      "name": "MMTFinance",
+      "token": "MMT",
+      "points": "",
+      "amount": "",
+      "time": "17:00",
+      "date": "2025-10-31",
+      "status": "announced",
+      "type": "tge"
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:18:32.461733",
+    "updated_at": "2025-10-30T18:36:27.604833"
+  },
+  "NB_2025-10-31_": {
+    "airdrop_info": {
+      "name": "Nubila Network",
+      "token": "NB",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-10-31",
+      "status": "announced",
+      "type": ""
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:18:32.461741",
+    "updated_at": "2025-10-30T18:36:27.604838"
+  },
+  "BAY_2025-11-01_": {
+    "airdrop_info": {
+      "name": "Marina Protocol",
+      "token": "BAY",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-01",
+      "status": "announced",
+      "type": ""
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:18:32.461747",
+    "updated_at": "2025-10-30T18:36:27.604843"
+  },
+  "BEAT_2025-11-01_": {
+    "airdrop_info": {
+      "name": "Audiera",
+      "token": "BEAT",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-01",
+      "status": "announced",
+      "type": ""
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:18:32.461754",
+    "updated_at": "2025-10-30T18:36:27.604847"
+  },
+  "TEST_2025-10-30_21:18": {
+    "airdrop_info": {
+      "name": "测试空投",
+      "token": "TEST",
+      "points": "100",
+      "amount": "500",
+      "time": "21:18",
+      "date": "2025-10-30",
+      "status": "announced",
+      "type": "tge"
+    },
+    "reminder_status": {
+      "three_hours_sent": true,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:18:52.459687",
+    "updated_at": "2025-10-30T18:18:52.461518"
+  },
+  "TEST_2025-10-30_21:33": {
+    "airdrop_info": {
+      "name": "飞书通知测试空投",
+      "token": "TEST",
+      "points": "1000",
+      "amount": "100 TEST",
+      "time": "21:33",
+      "date": "2025-10-30",
+      "status": "active",
+      "type": "测试"
+    },
+    "reminder_status": {
+      "three_hours_sent": true,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T18:28:13.304137",
+    "updated_at": "2025-10-30T18:28:13.726073"
+  }
+}

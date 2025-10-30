@@ -6,7 +6,10 @@ env/
 
 # 配置文件 (包含敏感信息)
 aster/config.json
+backpack/config.json
+hyperliquid/config.json
 config.json
+config.py
 
 # Python 缓存文件
 __pycache__/
@@ -108,3 +111,5 @@ Desktop.ini
 # 临时文件
 *.tmp
 *.temp
+conf.conf
+*/logs/*
