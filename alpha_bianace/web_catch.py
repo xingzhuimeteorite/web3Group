@@ -9,6 +9,7 @@ import json
 from dataclasses import dataclass
 from typing import List, Optional
 from datetime import datetime
+import re
 
 
 @dataclass
@@ -22,6 +23,10 @@ class AirdropInfo:
     date: str           # 日期
     status: str         # 状态
     type: str           # 类型
+    # 可选价格信息（最小改动新增字段，默认None，兼容旧数据）
+    price: Optional[float] = None       # 现货价格（USD）
+    dex_price: Optional[float] = None   # DEX价格（USD）
+    amount_usd: Optional[float] = None  # 数量估值（USD）
     
     def __str__(self):
         return f"{self.name}({self.token}) - 积分:{self.points} 数量:{self.amount} 时间:{self.date} {self.time}"
@@ -64,6 +69,7 @@ class WebCatch:
                 return []
             
             airdrops_data = data.get('airdrops', [])
+            prices_data = self._fetch_prices()  # 从新的API获取价格
             airdrops = []
             
             for item in airdrops_data:
@@ -80,6 +86,31 @@ class WebCatch:
                     status=item.get('status', ''),
                     type=item.get('type', '')
                 )
+
+                # 附加价格信息（如API提供）
+                token = airdrop.token or item.get('token', '')
+                if token and isinstance(prices_data, dict) and 'prices' in prices_data:
+                    price_info = prices_data['prices'].get(token)
+                    if isinstance(price_info, dict):
+
+
+                        # 现货与dex价格
+                        airdrop.price = price_info.get('price')
+                        airdrop.dex_price = price_info.get('dex_price')
+                        
+                        # 估算数量的USD价值（尽量解析数字部分）
+                        amount_str = airdrop.amount or ''
+                        # 提取第一个数字（整数或小数）
+                        match = re.search(r"\d+(?:\.\d+)?", amount_str)
+                        if match:
+                            try:
+                                amount_num = float(match.group(0))
+                                # 优先使用现货价格
+                                unit_price = airdrop.price or airdrop.dex_price
+                                if unit_price:
+                                    airdrop.amount_usd = round(amount_num * float(unit_price), 4)
+                            except Exception:
+                                pass
                 airdrops.append(airdrop)
             
             return airdrops
@@ -93,6 +124,25 @@ class WebCatch:
         except Exception as e:
             print(f"❌ 抓取失败: {e}")
             return []
+
+    def _fetch_prices(self) -> dict:
+        """
+        从 /api/price/ 获取价格信息
+        """
+        try:
+            url = f"{self.base_url}/api/price/?batch=today"
+            response = self.session.get(url, timeout=5)
+            response.raise_for_status()
+            prices_data = response.json()
+            print(f"⚙️ 调试: 获取到的价格数据: {prices_data}")
+            return prices_data
+        except requests.exceptions.RequestException as e:
+            print(f"⚠️ 获取价格信息失败: {e}")
+            return {}
+        except json.JSONDecodeError as e:
+            print(f"⚠️ 解析价格信息失败: {e}")
+            return {}
+
     
     def get_today_airdrops(self) -> List[AirdropInfo]:
         """
@@ -162,6 +212,17 @@ class WebCatch:
             print(f"    📅 时间: {airdrop.date} {airdrop.time}")
             print(f"    🎯 积分: {airdrop.points or '未知'}")
             print(f"    💰 数量: {airdrop.amount or '未知'}")
+            # 可选显示价格/估值（如果有）
+            if airdrop.amount_usd is not None:
+                print(f"    💵 估值: ${airdrop.amount_usd}")
+            elif airdrop.price is not None or airdrop.dex_price is not None:
+                price_str = (
+                    f"${airdrop.price}" if airdrop.price is not None else ""
+                )
+                dex_str = (
+                    f" (DEX ${airdrop.dex_price})" if airdrop.dex_price is not None else ""
+                )
+                print(f"    💵 价格: {price_str}{dex_str}")
             print(f"    📊 状态: {airdrop.status}")
             print(f"    🏷️  类型: {airdrop.type or '未知'}")
             print()

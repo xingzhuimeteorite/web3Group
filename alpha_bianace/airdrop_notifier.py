@@ -188,6 +188,17 @@ class AirdropNotifier:
             content.append([
                 {"tag": "text", "text": f"💰 数量: {airdrop.amount}"}
             ])
+        # 可选显示USD估值或价格
+        if getattr(airdrop, 'amount_usd', None) is not None:
+            content.append([
+                {"tag": "text", "text": f"💵 估值: ${airdrop.amount_usd}"}
+            ])
+        elif getattr(airdrop, 'price', None) is not None or getattr(airdrop, 'dex_price', None) is not None:
+            price_str = f"${getattr(airdrop, 'price'):.4f}" if getattr(airdrop, 'price', None) is not None else ""
+            dex_str = f" (DEX ${getattr(airdrop, 'dex_price'):.4f})" if getattr(airdrop, 'dex_price', None) is not None else ""
+            content.append([
+                {"tag": "text", "text": f"💵 价格: {price_str}{dex_str}"}
+            ])
         
         # 状态和类型
         status_emoji = "✅" if airdrop.status == "announced" else "⏳"
@@ -253,8 +264,19 @@ class AirdropNotifier:
         if today_airdrops:
             for airdrop in today_airdrops[:5]:  # 最多显示5个
                 type_emoji = "🎯" if airdrop.type == "tge" else "🎁"
+                # 价格/估值信息（有则附加）
+                price_suffix = ""
+                if getattr(airdrop, 'amount_usd', None) is not None:
+                    price_suffix = f"  💵 ${airdrop.amount_usd}"
+                else:
+                    price = getattr(airdrop, 'price', None)
+                    dex_price = getattr(airdrop, 'dex_price', None)
+                    if price is not None or dex_price is not None:
+                        base = f"${price:.4f}" if price is not None else ""
+                        dex = f" (DEX ${dex_price:.4f})" if dex_price is not None else ""
+                        price_suffix = f"  💵 {base}{dex}"
                 content.append([
-                    {"tag": "text", "text": f"  {type_emoji} {airdrop.name or airdrop.token} - {airdrop.time}"}
+                    {"tag": "text", "text": f"  {type_emoji} {airdrop.name or airdrop.token} - {airdrop.time}{price_suffix}"}
                 ])
         else:
             content.append([
@@ -271,8 +293,18 @@ class AirdropNotifier:
         if upcoming_airdrops:
             for airdrop in upcoming_airdrops[:5]:  # 最多显示5个
                 type_emoji = "🎯" if airdrop.type == "tge" else "🎁"
+                price_suffix = ""
+                if getattr(airdrop, 'amount_usd', None) is not None:
+                    price_suffix = f"  💵 ${airdrop.amount_usd}"
+                else:
+                    price = getattr(airdrop, 'price', None)
+                    dex_price = getattr(airdrop, 'dex_price', None)
+                    if price is not None or dex_price is not None:
+                        base = f"${price:.4f}" if price is not None else ""
+                        dex = f" (DEX ${dex_price:.4f})" if dex_price is not None else ""
+                        price_suffix = f"  💵 {base}{dex}"
                 content.append([
-                    {"tag": "text", "text": f"  {type_emoji} {airdrop.name or airdrop.token} - {airdrop.date} {airdrop.time}"}
+                    {"tag": "text", "text": f"  {type_emoji} {airdrop.name or airdrop.token} - {airdrop.date} {airdrop.time}{price_suffix}"}
                 ])
         else:
             content.append([

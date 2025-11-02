@@ -7,6 +7,13 @@
 3. 管理空投任务数据结构
 """
 
+import sys
+import os
+
+# 将父目录添加到 Python 路径（保留路径配置以兼容其他模块）
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(parent_dir)
+
 import time
 import json
 import threading
@@ -16,7 +23,19 @@ from dataclasses import dataclass, asdict
 from typing import Dict, List, Optional
 from web_catch import WebCatch, AirdropInfo
 from airdrop_notifier import AirdropNotifier
-from config_loader import load_config
+
+# 新增：读取alpha_bianace目录下的conf.conf配置文件
+def load_alpha_config():
+    config_path = os.path.join(os.path.dirname(__file__), 'conf.conf')
+    config = {}
+    if os.path.exists(config_path):
+        with open(config_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    key, value = line.split('=', 1)
+                    config[key.strip()] = value.strip()
+    return config
 
 
 @dataclass
@@ -205,9 +224,10 @@ class AirdropScheduler:
         self.notifier = None
         if not test_mode:
             try:
-                config = load_config()
-                if config.feishu_webhook_url:
-                    self.notifier = AirdropNotifier(config.feishu_webhook_url)
+                # config = load_config()
+                config = load_alpha_config()
+                if config.get('feishu_webhook_url'):
+                    self.notifier = AirdropNotifier(config['feishu_webhook_url'])
                     print("✅ 飞书通知器初始化成功")
                 else:
                     print("⚠️ 未配置飞书webhook，通知功能将被禁用")
@@ -305,6 +325,19 @@ class AirdropScheduler:
                 print(f"   📅 时间: {airdrop.date} {airdrop.time}")
                 print(f"   🎯 积分: {airdrop.points}")
                 print(f"   💰 数量: {airdrop.amount}")
+                # 价格或估值（可选输出）
+                try:
+                    amount_usd = getattr(airdrop, 'amount_usd', None)
+                    price = getattr(airdrop, 'price', None)
+                    dex_price = getattr(airdrop, 'dex_price', None)
+                    if amount_usd is not None:
+                        print(f"   💵 估值: ${amount_usd}")
+                    elif price is not None or dex_price is not None:
+                        base = f"${price:.4f}" if price is not None else ""
+                        dex = f" (DEX ${dex_price:.4f})" if dex_price is not None else ""
+                        print(f"   💵 价格: {base}{dex}")
+                except Exception:
+                    pass
                 
                 # 发送飞书通知
                 if self.notifier and not self.test_mode:
@@ -364,6 +397,17 @@ class AirdropScheduler:
                 print(f"❌ 每分钟任务执行失败: {e}")
                 time.sleep(10)  # 出错时等待10秒后重试
     
+    def daily_summary_task(self):
+        """每天固定时间发送每日汇总"""
+        while self.running:
+            now = datetime.now()
+            # 每天早上9点发送
+            if now.hour == 9 and now.minute == 0 and now.second < 5: # 留一点容错时间
+                print(f"📊 [{now.strftime('%H:%M:%S')}] 准备发送每日汇总...")
+                self.send_daily_summary()
+                time.sleep(60) # 避免在同一分钟内重复发送
+            time.sleep(1) # 每秒检查一次
+
     def start(self):
         """启动调度器"""
         if self.running:
@@ -380,10 +424,15 @@ class AirdropScheduler:
         # 启动每分钟任务线程
         self.minute_thread = threading.Thread(target=self.minute_task, daemon=True)
         self.minute_thread.start()
+
+        # 启动每日汇总任务线程
+        self.daily_summary_thread = threading.Thread(target=self.daily_summary_task, daemon=True)
+        self.daily_summary_thread.start()
         
         print("✅ 调度器启动成功")
         print("   📡 每小时抓取空投信息")
         print("   🔔 每分钟检查提醒")
+        print("   ☀️ 每天早上9点发送每日汇总")
     
     def stop(self):
         """停止调度器"""
@@ -399,6 +448,8 @@ class AirdropScheduler:
             self.hourly_thread.join(timeout=5)
         if hasattr(self, 'minute_thread') and self.minute_thread:
             self.minute_thread.join(timeout=5)
+        if hasattr(self, 'daily_summary_thread') and self.daily_summary_thread:
+            self.daily_summary_thread.join(timeout=5)
         
         print("✅ 调度器已停止")
     
@@ -414,6 +465,8 @@ class AirdropScheduler:
         if hasattr(self, 'hourly_thread') and self.hourly_thread and self.hourly_thread.is_alive():
             active_threads += 1
         if hasattr(self, 'minute_thread') and self.minute_thread and self.minute_thread.is_alive():
+            active_threads += 1
+        if hasattr(self, 'daily_summary_thread') and self.daily_summary_thread and self.daily_summary_thread.is_alive():
             active_threads += 1
         print(f"活跃线程: {active_threads}")
         
