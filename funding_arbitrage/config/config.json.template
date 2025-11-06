@@ -1,0 +1,23 @@
+{
+  "exchanges": {
+    "perp": { "id": "bitget", "type": "swap", "apiKey": "<填>", "secret": "<填>", "password": "<填>" },
+    "spot": { "id": "bitget", "type": "spot", "apiKey": "<填>", "secret": "<填>", "password": "<填>" }
+  },
+  "symbols": ["BTC/USDT"],
+  "position": {
+    "notional_usd": 1000,
+    "futures_margin_leverage": 3,
+    "deltaTarget": 0.0,
+    "rebalanceThreshold": 0.002
+  },
+  "thresholds": { "dailyFundingMin": 0.0002, "flipExit": true, "flipToleranceHours": 2 },
+  "timeouts": { "open_timeout_sec": 10, "poll_interval_sec": 0.5 },
+  "costs": { "taker_bps": 5, "maker_bps": 2, "slippage_bps": 5, "borrowRateDaily": 0.001 },
+  "network": {
+    "proxies": {
+      "http": "http://127.0.0.1:7890",
+      "https": "http://127.0.0.1:7890"
+    },
+    "timeout_sec": 20
+  }
+}

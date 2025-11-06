@@ -367,15 +367,15 @@
       "status": "announced",
       "type": "grab",
       "price": 0,
-      "dex_price": 0.21152506250460032,
-      "amount_usd": 42.305
+      "dex_price": 0.220379251170813,
+      "amount_usd": 44.0759
     },
     "reminder_status": {
       "three_hours_sent": true,
       "one_hour_sent": true
     },
     "created_at": "2025-11-03T14:44:59.634669",
-    "updated_at": "2025-11-06T10:45:59.343792"
+    "updated_at": "2025-11-06T14:46:03.243161"
   },
   "KITE_2025-11-03_19:00": {
     "airdrop_info": {
@@ -438,7 +438,7 @@
       "one_hour_sent": false
     },
     "created_at": "2025-11-04T15:45:19.286747",
-    "updated_at": "2025-11-06T10:45:59.343841"
+    "updated_at": "2025-11-06T14:46:03.243190"
   },
   "LONG_2025-11-06_": {
     "airdrop_info": {
@@ -459,7 +459,7 @@
       "one_hour_sent": false
     },
     "created_at": "2025-11-04T16:45:19.661000",
-    "updated_at": "2025-11-06T10:45:59.343854"
+    "updated_at": "2025-11-06T14:46:03.243207"
   },
   "SENTIS_2025-11-05_": {
     "airdrop_info": {
@@ -522,7 +522,7 @@
       "one_hour_sent": false
     },
     "created_at": "2025-11-04T20:45:21.250192",
-    "updated_at": "2025-11-06T10:45:59.343848"
+    "updated_at": "2025-11-06T14:46:03.243202"
   },
   "SENTIS_2025-11-05_20:00": {
     "airdrop_info": {
@@ -535,15 +535,15 @@
       "status": "announced",
       "type": "grab",
       "price": 0,
-      "dex_price": 0.035799010600849945,
-      "amount_usd": 22.9114
+      "dex_price": 0.03455668685253454,
+      "amount_usd": 22.1163
     },
     "reminder_status": {
       "three_hours_sent": false,
       "one_hour_sent": true
     },
     "created_at": "2025-11-05T17:45:51.947628",
-    "updated_at": "2025-11-06T10:45:59.343819"
+    "updated_at": "2025-11-06T14:46:03.243183"
   },
   "ARIAIP_2025-11-07_": {
     "airdrop_info": {
@@ -564,6 +564,6 @@
       "one_hour_sent": false
     },
     "created_at": "2025-11-05T18:45:52.101496",
-    "updated_at": "2025-11-06T10:45:59.343859"
+    "updated_at": "2025-11-06T14:46:03.243216"
   }
 }

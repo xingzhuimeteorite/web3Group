@@ -113,3 +113,5 @@ Desktop.ini
 *.temp
 conf.conf
 */logs/*
+config.json
+alpha_bianace/airdrop_tasks.json
