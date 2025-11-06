@@ -1,0 +1,51 @@
+{
+  "manual_addresses": {
+    
+    
+   
+    "0xcac1f7aa03f7ecda6a6a940e6477a5f72b975086": {
+      "name": "千万级大户",
+      "tags": [
+        "大额仓位",
+        "千万级",
+        "重点监控"
+      ],
+      "description": "拥有千万级别仓位的重要地址，需要重点监控",
+      "added_time": "2025-10-15T12:00:00",
+      "is_active": true
+    },
+
+    "0x0ddf9bae2af4b874b96d287a5ad42eb47138a902":{
+      "name": "千万级大户",
+      "tags": [
+        "大额仓位",
+        "千万级",
+        "重点监控"
+      ],
+      "description": "拥有千万级别仓位的重要地址，需要重点监控",
+      "added_time": "2025-10-15T12:00:00",
+      "is_active": true
+    },
+    "0x5405450cae1b86581f017d1c35ad954d8703f802": {
+      "name": "千万级大户",
+      "tags": [
+        "大额仓位",
+        "千万级",
+        "重点监控"
+      ],
+      "description": "拥有千万级别仓位的重要地址，需要重点监控",
+      "added_time": "2025-10-15T12:00:00",
+      "is_active": true
+    }
+
+  },
+  "auto_addresses": {},
+  "blacklist": [],
+  "whitelist": [],
+  "settings": {
+    "auto_discovery_enabled": true,
+    "min_position_threshold": 1000000,
+    "max_auto_addresses": 1000,
+    "check_interval_hours": 1
+  }
+}

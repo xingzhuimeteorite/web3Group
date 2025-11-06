@@ -73,13 +73,18 @@ class AirdropNotifier:
                         error_msg = (result.get('msg') or 
                                    result.get('StatusMessage') or 
                                    '未知错误')
-                        print(f"❌ 飞书推送失败: {error_msg}")
+                        print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ❌ 飞书推送失败: {error_msg}")
+                        # 检查是否是频率限制错误
+                        if "frequency limited" in error_msg.lower() and attempt < retry_times - 1:
+                            print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ⚠️ 检测到频率限制，将在 5 秒后重试...")
+                            time.sleep(5) # 频率限制等待更长时间
+                            continue # 继续下一次重试
                         return False
                 else:
-                    print(f"❌ HTTP请求失败: {response.status_code}")
+                    print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ❌ HTTP请求失败: {response.status_code}")
                     
             except requests.exceptions.RequestException as e:
-                print(f"❌ 网络请求异常 (尝试 {attempt + 1}/{retry_times}): {e}")
+                print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ❌ 网络请求异常 (尝试 {attempt + 1}/{retry_times}): {e}")
                 if attempt < retry_times - 1:
                     time.sleep(1.0 * (attempt + 1))  # 递增延迟
                     

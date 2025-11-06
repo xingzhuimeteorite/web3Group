@@ -1,0 +1,377 @@
+{
+  "_metadata": {
+    "description": "此文件由系统自动管理，包含地址的历史数据和统计信息",
+    "last_updated": "2025-10-15T17:09:50.870959",
+    "total_addresses": 25,
+    "whale_count": 3,
+    "note": "手动添加的地址请使用 whale_config.json 文件"
+  },
+  "addresses": {
+    "0x1234567890abcdef1234567890abcdef12345678": {
+      "address": "0x1234567890abcdef1234567890abcdef12345678",
+      "first_seen": "2024-01-15T10:30:00",
+      "last_checked": "2025-10-15T17:01:47.620275",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "高频交易",
+        "套利",
+        "manual"
+      ],
+      "notes": "经常进行大额套利交易的地址",
+      "source": "manual"
+    },
+    "0xabcdef1234567890abcdef1234567890abcdef12": {
+      "address": "0xabcdef1234567890abcdef1234567890abcdef12",
+      "first_seen": "2024-01-20T14:15:00",
+      "last_checked": "2025-10-15T17:01:47.620294",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "机构",
+        "长期持有",
+        "manual"
+      ],
+      "notes": "某知名投资机构的交易地址",
+      "source": "manual"
+    },
+    "0x1111111111111111111111111111111111111111": {
+      "address": "0x1111111111111111111111111111111111111111",
+      "first_seen": "2025-10-15T17:00:16.800874",
+      "last_checked": "2025-10-15T17:01:47.620300",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "测试",
+        "高频交易",
+        "manual"
+      ],
+      "notes": "这是一个测试地址",
+      "source": "manual"
+    },
+    "0x2222222222222222222222222222222222222222": {
+      "address": "0x2222222222222222222222222222222222222222",
+      "first_seen": "2025-10-15T17:00:16.800930",
+      "last_checked": "2025-10-15T17:01:47.620303",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "机构",
+        "长期持有",
+        "manual"
+      ],
+      "notes": "某测试机构的交易地址",
+      "source": "manual"
+    },
+    "0x3333333333333333333333333333333333333333": {
+      "address": "0x3333333333333333333333333333333333333333",
+      "first_seen": "2025-10-15T17:01:47.620909",
+      "last_checked": "2025-10-15T17:01:47.620902",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "新增",
+        "测试",
+        "manual"
+      ],
+      "notes": "手动添加的地址",
+      "source": "manual"
+    },
+    "0xcac1f7aa03f7ecda6a6a940e6477a5f72b975086": {
+      "address": "0xcac1f7aa03f7ecda6a6a940e6477a5f72b975086",
+      "first_seen": "2025-01-15T12:00:00",
+      "last_checked": "2025-10-15T17:09:41.991414",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "大额仓位",
+        "千万级",
+        "重点监控",
+        "manual"
+      ],
+      "notes": "拥有千万级别仓位的重要地址，需要重点监控",
+      "source": "manual"
+    },
+    "0x5b5d2c60c060c060c060c060c060c060c060c060": {
+      "address": "0x5b5d2c60c060c060c060c060c060c060c060c060",
+      "first_seen": "2025-10-15T16:48:35.692365",
+      "last_checked": "2025-10-15T16:48:35.692453",
+      "total_position_value": 1995327.5106548916,
+      "max_position_value": 1995327.5106548916,
+      "position_count": 5,
+      "is_whale": true,
+      "tags": [
+        "seed",
+        "whale"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f2": {
+      "address": "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f2",
+      "first_seen": "2025-10-15T16:48:35.692392",
+      "last_checked": "2025-10-15T16:48:35.692475",
+      "total_position_value": 4168889.6119349366,
+      "max_position_value": 4168889.6119349366,
+      "position_count": 1,
+      "is_whale": true,
+      "tags": [
+        "seed",
+        "whale"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb79bb7": {
+      "address": "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb79bb7",
+      "first_seen": "2025-10-15T16:48:35.692400",
+      "last_checked": "2025-10-15T16:48:35.692486",
+      "total_position_value": 3506508.4719319902,
+      "max_position_value": 3506508.4719319902,
+      "position_count": 4,
+      "is_whale": true,
+      "tags": [
+        "seed",
+        "whale"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0x4044794c794c794c794c794c794c794c794c794c": {
+      "address": "0x4044794c794c794c794c794c794c794c794c794c",
+      "first_seen": "2025-10-15T16:48:35.692406",
+      "last_checked": "2025-10-15T16:48:35.692406",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "seed"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0xb9fed365d365d365d365d365d365d365d365d365": {
+      "address": "0xb9fed365d365d365d365d365d365d365d365d365",
+      "first_seen": "2025-10-15T16:48:35.692409",
+      "last_checked": "2025-10-15T16:48:35.692409",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "seed"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0xd4751a91a91a91a91a91a91a91a91a91a91a91a9": {
+      "address": "0xd4751a91a91a91a91a91a91a91a91a91a91a91a9",
+      "first_seen": "2025-10-15T16:48:35.692414",
+      "last_checked": "2025-10-15T16:48:35.692414",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "seed"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0xb83d6e366e366e366e366e366e366e366e366e36": {
+      "address": "0xb83d6e366e366e366e366e366e366e366e366e36",
+      "first_seen": "2025-10-15T16:48:35.692417",
+      "last_checked": "2025-10-15T16:48:35.692417",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "seed"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0x8af7fa05fa05fa05fa05fa05fa05fa05fa05fa05": {
+      "address": "0x8af7fa05fa05fa05fa05fa05fa05fa05fa05fa05",
+      "first_seen": "2025-10-15T16:48:35.692420",
+      "last_checked": "2025-10-15T16:48:35.692420",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "seed"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0xffbd1628162816281628162816281628162816281": {
+      "address": "0xffbd1628162816281628162816281628162816281",
+      "first_seen": "2025-10-15T16:48:35.692424",
+      "last_checked": "2025-10-15T16:48:35.692424",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "seed"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0x1b52d41bd41bd41bd41bd41bd41bd41bd41bd41b": {
+      "address": "0x1b52d41bd41bd41bd41bd41bd41bd41bd41bd41b",
+      "first_seen": "2025-10-15T16:48:35.692427",
+      "last_checked": "2025-10-15T16:48:35.692427",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "seed"
+      ],
+      "notes": "初始种子地址",
+      "source": "unknown"
+    },
+    "0x5b5d2c60c060c060c060c060c060c060c0600000": {
+      "address": "0x5b5d2c60c060c060c060c060c060c060c0600000",
+      "first_seen": "2025-10-15T16:48:35.692499",
+      "last_checked": "2025-10-15T16:48:35.692499",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0x5b5d2c60... 发现",
+      "source": "unknown"
+    },
+    "0x5b5d2c60c060c060c060c060c060c060c0600001": {
+      "address": "0x5b5d2c60c060c060c060c060c060c060c0600001",
+      "first_seen": "2025-10-15T16:48:35.692505",
+      "last_checked": "2025-10-15T16:48:35.692505",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0x5b5d2c60... 发现",
+      "source": "unknown"
+    },
+    "0x5b5d2c60c060c060c060c060c060c060c0600002": {
+      "address": "0x5b5d2c60c060c060c060c060c060c060c0600002",
+      "first_seen": "2025-10-15T16:48:35.692510",
+      "last_checked": "2025-10-15T16:48:35.692510",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0x5b5d2c60... 发现",
+      "source": "unknown"
+    },
+    "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f20000": {
+      "address": "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f20000",
+      "first_seen": "2025-10-15T16:48:35.692514",
+      "last_checked": "2025-10-15T16:48:35.692514",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0xc2a3e5f2... 发现",
+      "source": "unknown"
+    },
+    "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f20001": {
+      "address": "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f20001",
+      "first_seen": "2025-10-15T16:48:35.692519",
+      "last_checked": "2025-10-15T16:48:35.692519",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0xc2a3e5f2... 发现",
+      "source": "unknown"
+    },
+    "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f20002": {
+      "address": "0xc2a3e5f2e5f2e5f2e5f2e5f2e5f2e5f2e5f20002",
+      "first_seen": "2025-10-15T16:48:35.692522",
+      "last_checked": "2025-10-15T16:48:35.692522",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0xc2a3e5f2... 发现",
+      "source": "unknown"
+    },
+    "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb70000": {
+      "address": "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb70000",
+      "first_seen": "2025-10-15T16:48:35.692526",
+      "last_checked": "2025-10-15T16:48:35.692526",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0x5d2f9bb7... 发现",
+      "source": "unknown"
+    },
+    "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb70001": {
+      "address": "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb70001",
+      "first_seen": "2025-10-15T16:48:35.692530",
+      "last_checked": "2025-10-15T16:48:35.692530",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0x5d2f9bb7... 发现",
+      "source": "unknown"
+    },
+    "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb70002": {
+      "address": "0x5d2f9bb79bb79bb79bb79bb79bb79bb79bb70002",
+      "first_seen": "2025-10-15T16:48:35.692534",
+      "last_checked": "2025-10-15T16:48:35.692534",
+      "total_position_value": 0.0,
+      "max_position_value": 0.0,
+      "position_count": 0,
+      "is_whale": false,
+      "tags": [
+        "pattern_discovery"
+      ],
+      "notes": "基于 0x5d2f9bb7... 发现",
+      "source": "unknown"
+    }
+  }
+}

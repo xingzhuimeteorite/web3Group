@@ -1,0 +1,22 @@
+{
+    "feishu": {
+        "webhook_url": "your_feishu_webhook_url_here",
+        "enable_notifications": true,
+        "alert_threshold": 10000000.0,
+        "batch_summary": true,
+        "timeout": 10,
+        "retry_times": 3
+    },
+    "monitoring": {
+        "check_interval_minutes": 10,
+        "max_concurrent_checks": 5,
+        "position_change_threshold": 0.05,
+        "pnl_alert_threshold": 10000.0,
+        "save_history": true
+    },
+    "whale_detection": {
+        "min_position_value": 100000.0,
+        "mega_whale_threshold": 10000000.0,
+        "super_whale_threshold": 50000000.0
+    }
+}

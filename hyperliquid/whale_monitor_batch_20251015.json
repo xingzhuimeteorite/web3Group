@@ -1,0 +1,122 @@
+{
+  "timestamp": "2025-10-15T18:57:05.466049",
+  "total_addresses": 2,
+  "total_monitored": 6,
+  "summary": {
+    "total_value": 17945328.177985,
+    "total_pnl": -1032591.3874920018,
+    "active_addresses": 2
+  },
+  "reports": [
+    {
+      "address": "0xcac1f7aa03f7ecda6a6a940e6477a5f72b975086",
+      "name": "千万级大户",
+      "source": "manual",
+      "timestamp": "2025-10-15T18:57:04.969827",
+      "total_position_value": 9684913.63042,
+      "total_pnl": -97862.06983200077,
+      "position_count": 1,
+      "whale_level": "whale",
+      "risk_level": "medium",
+      "confidence": 90.0,
+      "leverage_score": 22.5,
+      "concentration_score": 100,
+      "positions": [
+        {
+          "coin": "ETH",
+          "side": "多头",
+          "size": 2350.1938,
+          "entry_price": 4162.54,
+          "mark_price": 4120.9,
+          "liquidation_price": 3713.1945245897,
+          "leverage": 10.0,
+          "position_value": 9684913.63042,
+          "unrealized_pnl": -97862.06983200077,
+          "pnl_percentage": -1.0104588803416807
+        }
+      ],
+      "alerts": [
+        "🆕 首次记录该地址仓位"
+      ]
+    },
+    {
+      "address": "0x5405450cae1b86581f017d1c35ad954d8703f802",
+      "name": "千万级大户",
+      "source": "manual",
+      "timestamp": "2025-10-15T18:57:05.465437",
+      "total_position_value": 8260414.547565002,
+      "total_pnl": -934729.317660001,
+      "position_count": 5,
+      "whale_level": "whale",
+      "risk_level": "low",
+      "confidence": 100,
+      "leverage_score": 9.5,
+      "concentration_score": 100,
+      "positions": [
+        {
+          "coin": "ETH",
+          "side": "空头",
+          "size": 300.0006,
+          "entry_price": 3759.62,
+          "mark_price": 4120.9,
+          "liquidation_price": 15562.947735013,
+          "leverage": 10.0,
+          "position_value": 1236272.47254,
+          "unrealized_pnl": -108384.21676799993,
+          "pnl_percentage": -8.767016913780964
+        },
+        {
+          "coin": "HYPE",
+          "side": "空头",
+          "size": 145523.7,
+          "entry_price": 32.2041,
+          "mark_price": 40.328,
+          "liquidation_price": 63.2421115482,
+          "leverage": 3.0,
+          "position_value": 5868679.773600001,
+          "unrealized_pnl": -1182219.986430001,
+          "pnl_percentage": -20.144564570521737
+        },
+        {
+          "coin": "FARTCOIN",
+          "side": "空头",
+          "size": 324435.5,
+          "entry_price": 1.35066,
+          "mark_price": 0.42255,
+          "liquidation_price": 10.7005445312,
+          "leverage": 4.0,
+          "position_value": 137090.22052499998,
+          "unrealized_pnl": 301111.83190499997,
+          "pnl_percentage": 219.64501242456515
+        },
+        {
+          "coin": "SPX",
+          "side": "空头",
+          "size": 92.5,
+          "entry_price": 1.83441,
+          "mark_price": 1.2082,
+          "liquidation_price": 34411.7596442064,
+          "leverage": 5.0,
+          "position_value": 111.7585,
+          "unrealized_pnl": 57.924425000000014,
+          "pnl_percentage": 51.82999503393479
+        },
+        {
+          "coin": "ASTER",
+          "side": "空头",
+          "size": 696056.0,
+          "entry_price": 1.541493,
+          "mark_price": 1.4629,
+          "liquidation_price": 5.7744664045,
+          "leverage": 2.0,
+          "position_value": 1018260.3224000001,
+          "unrealized_pnl": 54705.12920799994,
+          "pnl_percentage": 5.372410964522518
+        }
+      ],
+      "alerts": [
+        "🆕 首次记录该地址仓位"
+      ]
+    }
+  ]
+}

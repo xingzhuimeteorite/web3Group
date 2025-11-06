@@ -1,40 +1,4 @@
 {
-  "PIEVERSE_2025-10-29_16:00": {
-    "airdrop_info": {
-      "name": "pieverse",
-      "token": "PIEVERSE",
-      "points": "227",
-      "amount": "255",
-      "time": "16:00",
-      "date": "2025-10-29",
-      "status": "announced",
-      "type": "tge"
-    },
-    "reminder_status": {
-      "three_hours_sent": false,
-      "one_hour_sent": false
-    },
-    "created_at": "2025-10-30T18:18:32.461624",
-    "updated_at": "2025-10-30T18:36:27.604770"
-  },
-  "BOS_2025-10-29_19:00": {
-    "airdrop_info": {
-      "name": "BitcoinOS",
-      "token": "BOS",
-      "points": "240",
-      "amount": "2688",
-      "time": "19:00",
-      "date": "2025-10-29",
-      "status": "announced",
-      "type": "grab"
-    },
-    "reminder_status": {
-      "three_hours_sent": false,
-      "one_hour_sent": false
-    },
-    "created_at": "2025-10-30T18:18:32.461706",
-    "updated_at": "2025-10-30T18:36:27.604819"
-  },
   "_2025-10-30_20:00": {
     "airdrop_info": {
       "name": "",
@@ -44,32 +8,38 @@
       "time": "20:00",
       "date": "2025-10-30",
       "status": "announced",
-      "type": "grab"
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
     },
     "reminder_status": {
       "three_hours_sent": false,
       "one_hour_sent": true
     },
     "created_at": "2025-10-30T18:18:32.461724",
-    "updated_at": "2025-10-30T18:36:27.604827"
+    "updated_at": "2025-10-30T19:36:33.245026"
   },
   "MMT_2025-10-31_17:00": {
     "airdrop_info": {
       "name": "MMTFinance",
       "token": "MMT",
-      "points": "",
-      "amount": "",
+      "points": "220",
+      "amount": "200.75",
       "time": "17:00",
       "date": "2025-10-31",
       "status": "announced",
-      "type": "tge"
+      "type": "tge",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
     },
     "reminder_status": {
-      "three_hours_sent": false,
-      "one_hour_sent": false
+      "three_hours_sent": true,
+      "one_hour_sent": true
     },
     "created_at": "2025-10-30T18:18:32.461733",
-    "updated_at": "2025-10-30T18:36:27.604833"
+    "updated_at": "2025-11-01T17:40:50.448278"
   },
   "NB_2025-10-31_": {
     "airdrop_info": {
@@ -80,14 +50,17 @@
       "time": "",
       "date": "2025-10-31",
       "status": "announced",
-      "type": ""
+      "type": "",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
     },
     "reminder_status": {
       "three_hours_sent": false,
       "one_hour_sent": false
     },
     "created_at": "2025-10-30T18:18:32.461741",
-    "updated_at": "2025-10-30T18:36:27.604838"
+    "updated_at": "2025-10-31T16:38:30.356473"
   },
   "BAY_2025-11-01_": {
     "airdrop_info": {
@@ -98,14 +71,17 @@
       "time": "",
       "date": "2025-11-01",
       "status": "announced",
-      "type": ""
+      "type": "",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
     },
     "reminder_status": {
       "three_hours_sent": false,
       "one_hour_sent": false
     },
     "created_at": "2025-10-30T18:18:32.461747",
-    "updated_at": "2025-10-30T18:36:27.604843"
+    "updated_at": "2025-11-01T13:40:27.438721"
   },
   "BEAT_2025-11-01_": {
     "airdrop_info": {
@@ -116,14 +92,17 @@
       "time": "",
       "date": "2025-11-01",
       "status": "announced",
-      "type": ""
+      "type": "",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
     },
     "reminder_status": {
       "three_hours_sent": false,
       "one_hour_sent": false
     },
     "created_at": "2025-10-30T18:18:32.461754",
-    "updated_at": "2025-10-30T18:36:27.604847"
+    "updated_at": "2025-11-01T14:40:33.580298"
   },
   "TEST_2025-10-30_21:18": {
     "airdrop_info": {
@@ -134,14 +113,17 @@
       "time": "21:18",
       "date": "2025-10-30",
       "status": "announced",
-      "type": "tge"
+      "type": "tge",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
     },
     "reminder_status": {
       "three_hours_sent": true,
-      "one_hour_sent": false
+      "one_hour_sent": true
     },
     "created_at": "2025-10-30T18:18:52.459687",
-    "updated_at": "2025-10-30T18:18:52.461518"
+    "updated_at": "2025-10-30T19:48:28.186314"
   },
   "TEST_2025-10-30_21:33": {
     "airdrop_info": {
@@ -152,13 +134,436 @@
       "time": "21:33",
       "date": "2025-10-30",
       "status": "active",
-      "type": "测试"
+      "type": "测试",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
     },
     "reminder_status": {
       "three_hours_sent": true,
-      "one_hour_sent": false
+      "one_hour_sent": true
     },
     "created_at": "2025-10-30T18:28:13.304137",
-    "updated_at": "2025-10-30T18:28:13.726073"
+    "updated_at": "2025-10-30T20:03:28.697163"
+  },
+  "BANK_2025-10-30_20:00": {
+    "airdrop_info": {
+      "name": "BANK",
+      "token": "BANK",
+      "points": 240,
+      "amount": "354",
+      "time": "20:00",
+      "date": "2025-10-30",
+      "status": "announced",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T20:36:38.866869",
+    "updated_at": "2025-10-31T19:38:47.183081"
+  },
+  "KITE_2025-11-03_": {
+    "airdrop_info": {
+      "name": "Kite",
+      "token": "KITE",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-03",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-10-30T22:36:50.014587",
+    "updated_at": "2025-11-03T15:45:00.476193"
+  },
+  "NB_2025-10-31_20:00": {
+    "airdrop_info": {
+      "name": "Nubila Network",
+      "token": "NB",
+      "points": "240",
+      "amount": "250",
+      "time": "20:00",
+      "date": "2025-10-31",
+      "status": "announced",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-10-31T17:38:36.042892",
+    "updated_at": "2025-11-02T10:20:57.605386"
+  },
+  "BAY_2025-11-01_16:00": {
+    "airdrop_info": {
+      "name": "Marina Protocol",
+      "token": "BAY",
+      "points": 230,
+      "amount": "400",
+      "time": "16:00",
+      "date": "2025-11-01",
+      "status": "announced",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-11-01T14:40:33.580030",
+    "updated_at": "2025-11-04T07:45:16.721238"
+  },
+  "TITN_2025-11-03_": {
+    "airdrop_info": {
+      "name": "THORWallet",
+      "token": "TITN",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-03",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-01T14:40:33.580314",
+    "updated_at": "2025-11-03T13:44:59.242346"
+  },
+  "BEAT_2025-11-01_17:00": {
+    "airdrop_info": {
+      "name": "Audiera",
+      "token": "BEAT",
+      "points": 235,
+      "amount": "245",
+      "time": "17:00",
+      "date": "2025-11-01",
+      "status": "announced",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-11-01T15:40:39.234228",
+    "updated_at": "2025-11-02T18:21:26.889123"
+  },
+  "TYCOON_2025-11-04_": {
+    "airdrop_info": {
+      "name": "Dino Tycoon",
+      "token": "TYCOON",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-04",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-02T14:21:19.930338",
+    "updated_at": "2025-11-04T13:45:18.612885"
+  },
+  "_2025-11-02_19:00": {
+    "airdrop_info": {
+      "name": "",
+      "token": "",
+      "points": "235",
+      "amount": "",
+      "time": "19:00",
+      "date": "2025-11-02",
+      "status": "announced",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-11-02T17:21:26.653983",
+    "updated_at": "2025-11-02T18:21:26.889128"
+  },
+  "LITKEY_2025-11-02_19:00": {
+    "airdrop_info": {
+      "name": "Lit Protocol",
+      "token": "LITKEY",
+      "points": 235,
+      "amount": "250",
+      "time": "19:00",
+      "date": "2025-11-02",
+      "status": "pending",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-02T19:21:27.241299",
+    "updated_at": "2025-11-04T07:45:16.721252"
+  },
+  "TITN_2025-11-03_16:00": {
+    "airdrop_info": {
+      "name": "THORWallet",
+      "token": "TITN",
+      "points": 240,
+      "amount": "320",
+      "time": "16:00",
+      "date": "2025-11-03",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0.046029562428374124,
+      "amount_usd": 14.7295
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-11-03T14:44:59.634650",
+    "updated_at": "2025-11-04T15:45:19.286703"
+  },
+  "TRUST_2025-11-05_17:00": {
+    "airdrop_info": {
+      "name": "Intuition",
+      "token": "TRUST",
+      "points": 224,
+      "amount": "200",
+      "time": "17:00",
+      "date": "2025-11-05",
+      "status": "announced",
+      "type": "grab",
+      "price": 0,
+      "dex_price": 0.21152506250460032,
+      "amount_usd": 42.305
+    },
+    "reminder_status": {
+      "three_hours_sent": true,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-11-03T14:44:59.634669",
+    "updated_at": "2025-11-06T10:45:59.343792"
+  },
+  "KITE_2025-11-03_19:00": {
+    "airdrop_info": {
+      "name": "Kite",
+      "token": "KITE",
+      "points": 215,
+      "amount": "500",
+      "time": "19:00",
+      "date": "2025-11-03",
+      "status": "announced",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-11-03T16:45:00.878673",
+    "updated_at": "2025-11-05T16:45:41.032788"
+  },
+  "TYCOON_2025-11-04_15:00": {
+    "airdrop_info": {
+      "name": "Dino Tycoon",
+      "token": "TYCOON",
+      "points": 230,
+      "amount": "375",
+      "time": "15:00",
+      "date": "2025-11-04",
+      "status": "announced",
+      "type": "grab",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-04T14:45:18.953430",
+    "updated_at": "2025-11-05T16:45:41.032876"
+  },
+  "UAI_2025-11-06_19:00": {
+    "airdrop_info": {
+      "name": "UnifAI",
+      "token": "UAI",
+      "points": "",
+      "amount": "",
+      "time": "19:00",
+      "date": "2025-11-06",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-04T15:45:19.286747",
+    "updated_at": "2025-11-06T10:45:59.343841"
+  },
+  "LONG_2025-11-06_": {
+    "airdrop_info": {
+      "name": "Belong",
+      "token": "LONG",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-06",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-04T16:45:19.661000",
+    "updated_at": "2025-11-06T10:45:59.343854"
+  },
+  "SENTIS_2025-11-05_": {
+    "airdrop_info": {
+      "name": "SentismAI",
+      "token": "SENTIS",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-05",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-04T18:45:20.309698",
+    "updated_at": "2025-11-05T16:45:41.032899"
+  },
+  "FOLKS_2025-11-06_": {
+    "airdrop_info": {
+      "name": "Folks Finance",
+      "token": "FOLKS",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-06",
+      "status": "announced",
+      "type": "",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-04T18:45:20.309743",
+    "updated_at": "2025-11-04T19:45:20.681136"
+  },
+  "FOLKS_2025-11-06_20:00": {
+    "airdrop_info": {
+      "name": "Folks Finance",
+      "token": "FOLKS",
+      "points": "",
+      "amount": "",
+      "time": "20:00",
+      "date": "2025-11-06",
+      "status": "announced",
+      "type": "",
+      "price": 0,
+      "dex_price": 0,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-04T20:45:21.250192",
+    "updated_at": "2025-11-06T10:45:59.343848"
+  },
+  "SENTIS_2025-11-05_20:00": {
+    "airdrop_info": {
+      "name": "SentismAI",
+      "token": "SENTIS",
+      "points": 235,
+      "amount": "640",
+      "time": "20:00",
+      "date": "2025-11-05",
+      "status": "announced",
+      "type": "grab",
+      "price": 0,
+      "dex_price": 0.035799010600849945,
+      "amount_usd": 22.9114
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": true
+    },
+    "created_at": "2025-11-05T17:45:51.947628",
+    "updated_at": "2025-11-06T10:45:59.343819"
+  },
+  "ARIAIP_2025-11-07_": {
+    "airdrop_info": {
+      "name": "Aria Protocol",
+      "token": "ARIAIP",
+      "points": "",
+      "amount": "",
+      "time": "",
+      "date": "2025-11-07",
+      "status": "announced",
+      "type": "",
+      "price": null,
+      "dex_price": null,
+      "amount_usd": null
+    },
+    "reminder_status": {
+      "three_hours_sent": false,
+      "one_hour_sent": false
+    },
+    "created_at": "2025-11-05T18:45:52.101496",
+    "updated_at": "2025-11-06T10:45:59.343859"
   }
 }

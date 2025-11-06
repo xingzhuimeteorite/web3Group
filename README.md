@@ -19,13 +19,13 @@
 
 详细的策略设计、使用说明和配置指南，请查看：
 
-📖 **[Aster Finance SOL双向交易策略文档](./README_aster.md)**
+📖 **[Aster Finance SOL双向交易策略文档](./docs/README_aster.md)**
 
 ### Backpack Exchange 网格交易策略
 
 基于网格交易的智能策略，详细文档请查看：
 
-📖 **[Backpack Exchange 网格交易策略文档](./README_backpack.md)**
+📖 **[Backpack Exchange 网格交易策略文档](./docs/README_backpack.md)**
 
 
 
@@ -53,6 +53,16 @@ web3Group/
     ├── config.json.template   # 配置模板
     └── trade_summary_log.txt  # 交易日志
 ```
+
+## ▶️ 运行入口（已归档至 scripts/）
+
+- `python scripts/trade_2.py`：实盘动态对冲策略（Aster空单 + Backpack多单）
+- `python scripts/trade_any_2.py`：多币种动态对冲策略（含波动性筛选）
+- `python scripts/trade_find.py`：两平台共同交易对的波动率分析与推荐
+- `python scripts/quick_close_test.py`：快速平仓逻辑验证（极小阈值）
+- `python scripts/trade_test.py`：交易流程与策略测试入口
+
+文档已归档至 `docs/` 目录，主文档仍为根目录的 `README.md`。
 
 ## 🔧 主要组件
 
